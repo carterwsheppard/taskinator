@@ -131,7 +131,7 @@ if (isEdit) {
     listItemEl.setAttribute("data-task-id",taskIdCounter);
 
     var taskInfoEl = document.createElement("div");
-    taskInfoEl.className = "task-iinfo";
+    taskInfoEl.className = "task-info";
     taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
     listItemEl.appendChild(taskInfoEl);
 
