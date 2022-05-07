@@ -6,6 +6,7 @@ var pageContentEl = document.querySelector("#page-content");
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
 var taskIdCounter = 0;
+var tasks = [];
 
 
 //FUNCTION FOR CREATING ACTIONS EDIT DELETE AND STATUS
@@ -65,6 +66,14 @@ var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId +
 taskSelected.querySelector("h3.task-name").textContent = taskName;
 taskSelected.querySelector("span.task-type").textContent = taskType;
 
+// loop through tasks array and task object with new content
+for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].id === parseInt(taskId)) {
+      tasks[i].name = taskName;
+      tasks[i].type = taskType;
+    }
+  };
+
 alert("Task Updated!");
 
 formEl.removeAttribute("data-task-id");
@@ -100,9 +109,10 @@ if (isEdit) {
   // no data attribute, so create object as normal and pass to createTaskEl function
   else {
     var taskDataObj = {
-      name: taskNameInput,
-      type: taskTypeInput
-    };
+        name: taskNameInput,
+        type: taskTypeInput,
+        status: "to do"
+      }
   
     createTaskEl(taskDataObj);
   }
@@ -117,7 +127,7 @@ if (isEdit) {
  var listItemEl = document.createElement("li");
     listItemEl.className = "task-item";
 
-    taskIdCounter++;
+   
     listItemEl.setAttribute("data-task-id",taskIdCounter);
 
     var taskInfoEl = document.createElement("div");
@@ -128,8 +138,14 @@ if (isEdit) {
     var taskActionsEl = createTaskActions(taskIdCounter);
     listItemEl.appendChild(taskActionsEl);
 
+    taskDataObj.id = taskIdCounter;
+
+    tasks.push(taskDataObj);
+
+ taskIdCounter++;
    // listItemEl.textContent = taskNameInput;
     tasksToDoEl.appendChild(listItemEl);
+   
 }
 
 
@@ -208,7 +224,28 @@ var taskButtonHandler = function(event) {
       else if (statusValue === "completed") {
         tasksCompletedEl.appendChild(taskSelected);
       }
+
+      // update task's in tasks array
+for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].id === parseInt(taskId)) {
+      tasks[i].status = statusValue;
+    }
+  }
   };
+
+
+  var taskDataObj = {
+    id: 1,
+    name: "Add localStorage persistence",
+    type: "Web",
+    status: "in progress"
+  }
+
+
+
+
+
+
 
 //RUN FUNCTIONS BASED ON CERTAIN EVENT LISTENERS
 
